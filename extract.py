@@ -58,5 +58,5 @@ if __name__ == '__main__':
         provider_uri=provider_uri,
         max_workers=5,
         blocks_output='/tmp/dummy.csv',
-        transactions_output=f'~/data/extracted/{_date}/{hour_ago}-{this_hour}.csv'
+        transactions_output=f'data/extracted/{_date}/{hour_ago}-{this_hour}.csv'
     )
