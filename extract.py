@@ -1,5 +1,6 @@
 import datetime
 import os
+import time
 
 from blockchainetl.logging_utils import logging_basic_config
 from ethereumetl.service.eth_service import EthService, BlockTimestampGraph
@@ -9,6 +10,7 @@ from ethereumetl.web3_utils import build_web3
 from ethereumetl.jobs.export_blocks_job import ExportBlocksJob
 from ethereumetl.jobs.exporters.blocks_and_transactions_item_exporter import blocks_and_transactions_item_exporter
 from ethereumetl.thread_local_proxy import ThreadLocalProxy
+from ethereumetl.service.graph_operations import OutOfBoundsError
 
 logging_basic_config()
 
@@ -21,12 +23,18 @@ provider_uri = os.environ.get('PROVIDER_URL', 'file:///home/ubuntu/node/geth.ipc
 
 def get_block_range_for_timestamps(provider_uri, start_timestamp, end_timestamp, chain='binance'):
     """Outputs start and end blocks for given timestamps."""
+    original_provider_uri = provider_uri
     provider_uri = check_classic_provider_uri(chain, provider_uri)
     provider = get_provider_from_uri(provider_uri)
     web3 = build_web3(provider)
     eth_service = EthService(web3)
-
-    return eth_service.get_block_range_for_timestamps(start_timestamp, end_timestamp)
+    try:
+        return eth_service.get_block_range_for_timestamps(start_timestamp, end_timestamp)
+    except OutOfBoundsError:
+        # OutOfBoundsError is raised if yet there is no block for endtime timestamp
+        # Typically that issue is gone within 3 seconds
+        time.sleep(1)
+        get_block_range_for_timestamps(original_provider_uri, start_timestamp, end_timestamp, chain='binance')
 
 
 def export_blocks_and_transactions(start_block, end_block, batch_size, provider_uri, max_workers, blocks_output,
