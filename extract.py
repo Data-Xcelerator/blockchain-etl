@@ -20,8 +20,9 @@ this_hour_ts = this_hour.timestamp()
 hour_ago_ts = hour_ago.timestamp()
 
 provider_uri = os.environ.get('PROVIDER_URL', 'file:///home/ubuntu/node/geth.ipc')
+CHAIN = os.environ.get('CHAIN_NETWORK', 'binance')
 
-def get_block_range_for_timestamps(provider_uri, start_timestamp, end_timestamp, chain='binance'):
+def get_block_range_for_timestamps(provider_uri, start_timestamp, end_timestamp, chain=CHAIN):
     """Outputs start and end blocks for given timestamps."""
     original_provider_uri = provider_uri
     provider_uri = check_classic_provider_uri(chain, provider_uri)
@@ -34,11 +35,11 @@ def get_block_range_for_timestamps(provider_uri, start_timestamp, end_timestamp,
         # OutOfBoundsError is raised if yet there is no block for endtime timestamp
         # Typically that issue is gone within 3 seconds
         time.sleep(1)
-        get_block_range_for_timestamps(original_provider_uri, start_timestamp, end_timestamp, chain='binance')
+        get_block_range_for_timestamps(original_provider_uri, start_timestamp, end_timestamp, chain=CHAIN)
 
 
 def export_blocks_and_transactions(start_block, end_block, batch_size, provider_uri, max_workers, blocks_output,
-                                   transactions_output, chain='binance'):
+                                   transactions_output, chain=CHAIN):
     """Exports blocks and transactions."""
     provider_uri = check_classic_provider_uri(chain, provider_uri)
     if blocks_output is None and transactions_output is None:
