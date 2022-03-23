@@ -12,7 +12,8 @@ from ethereumetl.jobs.exporters.blocks_and_transactions_item_exporter import blo
 from ethereumetl.thread_local_proxy import ThreadLocalProxy
 from ethereumetl.service.graph_operations import OutOfBoundsError
 
-logging_basic_config()
+from dotenv import load_dotenv
+load_dotenv()
 
 this_hour = datetime.datetime.now(datetime.timezone.utc).replace(microsecond=0, second=0, minute=0)
 hour_ago = this_hour - datetime.timedelta(hours=1)
