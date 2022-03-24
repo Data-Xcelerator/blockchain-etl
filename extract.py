@@ -36,7 +36,7 @@ def get_block_range_for_timestamps(provider_uri, start_timestamp, end_timestamp,
         # OutOfBoundsError is raised if yet there is no block for endtime timestamp
         # Typically that issue is gone within 3 seconds
         time.sleep(1)
-        get_block_range_for_timestamps(original_provider_uri, start_timestamp, end_timestamp, chain=CHAIN)
+        return get_block_range_for_timestamps(original_provider_uri, start_timestamp, end_timestamp, chain=CHAIN)
 
 
 def export_blocks_and_transactions(start_block, end_block, batch_size, provider_uri, max_workers, blocks_output,
