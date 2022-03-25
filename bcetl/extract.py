@@ -22,6 +22,7 @@ hour_ago_ts = hour_ago.timestamp()
 
 provider_uri = os.environ.get('PROVIDER_URL', 'file:///home/ubuntu/node/geth.ipc')
 CHAIN = os.environ.get('CHAIN_NETWORK', 'binance')
+TOKENS = None # We need to get tokens from bitquery or similar
 
 def get_block_range_for_timestamps(provider_uri, start_timestamp, end_timestamp, chain=CHAIN):
     """Outputs start and end blocks for given timestamps."""
@@ -59,7 +60,8 @@ if __name__ == '__main__':
         start_block=start_block,
         end_block=end_block,
         batch_size=end_block - start_block,
-        transactions_output=f'data/extracted/token_transfers/{_date}/{hour_ago}-{this_hour}.csv',
+        output=f'data/extracted/token_transfers/{_date}/{hour_ago}-{this_hour}.csv',
         max_workers=5,
         provider_uri=provider_uri,
+        tokens=TOKENS
     )
