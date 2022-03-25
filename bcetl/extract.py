@@ -3,14 +3,15 @@ import os
 import time
 
 from blockchainetl.logging_utils import logging_basic_config
-from ethereumetl.service.eth_service import EthService, BlockTimestampGraph
+from ethereumetl.service.eth_service import EthService
 from ethereumetl.providers.auto import get_provider_from_uri
 from ethereumetl.utils import check_classic_provider_uri
 from ethereumetl.web3_utils import build_web3
-from ethereumetl.jobs.export_blocks_job import ExportBlocksJob
-from ethereumetl.jobs.exporters.blocks_and_transactions_item_exporter import blocks_and_transactions_item_exporter
 from ethereumetl.thread_local_proxy import ThreadLocalProxy
 from ethereumetl.service.graph_operations import OutOfBoundsError
+from ethereumetl.jobs.export_token_transfers_job import ExportTokenTransfersJob
+from ethereumetl.jobs.exporters.token_transfers_item_exporter import token_transfers_item_exporter
+
 
 from dotenv import load_dotenv
 load_dotenv()
