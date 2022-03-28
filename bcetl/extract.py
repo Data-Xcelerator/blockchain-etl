@@ -20,8 +20,11 @@ from dotenv import load_dotenv
 load_dotenv()
 
 EXPORT_FUNC = 'token'
+ENC = ''
 if len(sys.argv) > 1:
-    EXPORT_FUNC = 'transaction'
+    EXPORT_FUNC = sys.argv[1]
+if len(sys.arg) > 2:
+    ENC = str(sys.argv[2])
 
 this_hour = datetime.datetime.now(datetime.timezone.utc).replace(microsecond=0, second=0, minute=0)
 hour_ago = this_hour - datetime.timedelta(hours=1)
@@ -69,11 +72,13 @@ def export_blocks_and_transactions(start_block, end_block, batch_size, provider_
 
 def export_token_transfers(start_block, end_block, batch_size, output, max_workers, provider_uri, tokens):
     """Exports ERC20/ERC721 transfers."""
+    web3=ThreadLocalProxy(lambda: build_web3(get_provider_from_uri(provider_uri)))
+    print(web3.toAscii(ENC))
     job = ExportTokenTransfersJob(
         start_block=start_block,
         end_block=end_block,
         batch_size=batch_size,
-        web3=ThreadLocalProxy(lambda: build_web3(get_provider_from_uri(provider_uri))),
+        web3=web3,
         item_exporter=token_transfers_item_exporter(output),
         max_workers=max_workers,
         tokens=tokens)
