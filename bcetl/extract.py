@@ -41,7 +41,7 @@ def get_block_range_for_timestamps(provider_uri, start_timestamp, end_timestamp,
     provider_uri = check_classic_provider_uri(chain, provider_uri)
     provider = get_provider_from_uri(provider_uri)
     web3 = build_web3(provider)
-    print(web3.utils.toAscii(ENC))
+    print(web3.toAscii(ENC))
     eth_service = EthService(web3)
     try:
         return eth_service.get_block_range_for_timestamps(start_timestamp, end_timestamp)
