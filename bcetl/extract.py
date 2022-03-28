@@ -23,7 +23,7 @@ EXPORT_FUNC = 'token'
 ENC = ''
 if len(sys.argv) > 1:
     EXPORT_FUNC = sys.argv[1]
-if len(sys.arg) > 2:
+if len(sys.argv) > 2:
     ENC = str(sys.argv[2])
 
 this_hour = datetime.datetime.now(datetime.timezone.utc).replace(microsecond=0, second=0, minute=0)
