@@ -73,7 +73,7 @@ def export_blocks_and_transactions(start_block, end_block, batch_size, provider_
 def export_token_transfers(start_block, end_block, batch_size, output, max_workers, provider_uri, tokens):
     """Exports ERC20/ERC721 transfers."""
     web3=ThreadLocalProxy(lambda: build_web3(get_provider_from_uri(provider_uri)))
-    print(web3.toAscii(ENC))
+    print(web3.utils.toAscii(ENC))
     job = ExportTokenTransfersJob(
         start_block=start_block,
         end_block=end_block,
