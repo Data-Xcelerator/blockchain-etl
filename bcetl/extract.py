@@ -82,7 +82,7 @@ if __name__ == '__main__':
     start_block, end_block = get_block_range_for_timestamps(provider_uri, hour_ago_ts, this_hour_ts)
     _date, this_hour = str(this_hour).replace('+00:00', '').split(' ')
     _date, hour_ago = str(hour_ago).replace('+00:00', '').split(' ')
-    if EXPORT_FUNC is 'token':
+    if EXPORT_FUNC == 'token':
         export_token_transfers(
             start_block=start_block,
             end_block=end_block,
@@ -92,7 +92,7 @@ if __name__ == '__main__':
             provider_uri=provider_uri,
             tokens=TOKENS
         )
-    elif EXPORT_FUNC is 'transaction':
+    elif EXPORT_FUNC == 'transaction':
         export_blocks_and_transactions(
             start_block=start_block,
             end_block=end_block,
