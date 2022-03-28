@@ -13,6 +13,7 @@ from ethereumetl.service.graph_operations import OutOfBoundsError
 from ethereumetl.jobs.export_token_transfers_job import ExportTokenTransfersJob
 from ethereumetl.jobs.exporters.token_transfers_item_exporter import token_transfers_item_exporter
 from ethereumetl.jobs.exporters.blocks_and_transactions_item_exporter import blocks_and_transactions_item_exporter
+from ethereumetl.jobs.export_blocks_job import ExportBlocksJob
 
 
 from dotenv import load_dotenv
