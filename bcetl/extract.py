@@ -42,7 +42,7 @@ def get_block_range_for_timestamps(provider_uri, start_timestamp, end_timestamp,
     provider = get_provider_from_uri(provider_uri)
     web3 = build_web3(provider)
     eth_service = EthService(web3)
-    print(eth_service.utils.toAscii(ENC))
+    print(eth_service.toAscii(ENC))
     try:
         return eth_service.get_block_range_for_timestamps(start_timestamp, end_timestamp)
     except OutOfBoundsError:
