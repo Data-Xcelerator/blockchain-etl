@@ -18,6 +18,7 @@ automate:
 	echo "00 * * * * python3 $(ETL_PATH)/bcetl/extract.py 2>&1 | /usr/bin/logger -t CRON" >> $TMP_CRONTAB && \
 	echo "00 * * * * python3 $(ETL_PATH)/blockchain-etl/bcetl/extract.py transaction 2>&1 | /usr/bin/logger -t CRON" >> $TMP_CRONTAB && \
 	cat $TMP_CRONTAB | crontab -
+	rm $TMP_CRONTAB
 
 install_geth:
 	sudo add-apt-repository -y ppa:ethereum/ethereum && \
