@@ -1,11 +1,30 @@
-Scripts for extracting, transforming and loading data from Fullnode on Binance Smart Chain.
-This should in theory work with any other network, but is tested on BSC only.
+Scripts for extracting, transforming and loading data from Fullnode on Ehtereum and Binance Smart Chain.
+
+## How it works
+
+Current scripts extract 2 different types of data.
+
+* Token transfers
+* Transactions
+
+Script will collect all the data for the given hour (rounded down) and hour earlier.
+Eg if it is 15:03 scripts will collect the data for 14:00-15:00. Data is saved in
+
+* `data/extracted/token_transfers/[date]/[hour-ago]-[current-hour].csv`
+* `data/extracted/transactions/[date]/[hour-ago]-[current-hour].csv`
 
 ## Prerequisites
 
-* Make sure you have access Binance Smart Chain Fullnode
-  * To run your own node follow instuctions https://docs.binance.org/smart-chain/developer/fullnode.html
-  * Alternatevaly you can use QuickNode, Moralis or any of your choice
+We assume the you have `geth` installed and already running blockchain node.
+However if not you can install and start it by running
+
+```
+make install
+make run_node
+```
+
+**Important:** This will start a full Ehtereum blockchain node, that requirements
+Big computational power and disk space. Be aware what are you doing.
 
 ## Install requirements
 
@@ -13,19 +32,35 @@ This should in theory work with any other network, but is tested on BSC only.
 pip install -r requirements.txt
 ```
 
-## Environment variables
-
-Node Provider is by default set to `file:///home/ubuntu/node/geth.ipc`,
-assuming you are running BSC node of your own. You can change that by setting
-`PROVIDER_URL` or updating .env file Eg:
-
-```
-PROVIDER_URL=https://speedy-nodes-nyc.moralis.io/1234567890/bsc/mainnet
-CHAIN_NETWORK=ethereum
-```
-
 ## Run Scripts
 
+To run script for extracting token data
+
 ```
-python extract.py
+python extract.py tokens
 ```
+
+To run script for extracting transfers data
+
+```
+python extract.py tokens
+```
+
+## Automation
+
+Assuming you have server running on AWS VM (or any other). All you need is to
+ssh into the VM, clone the repo and run `make all` command. Eg
+
+```
+ssh -i "very_secret.pem" ubuntu@ec2-01-23-456-789.compute-1.amazonaws.com
+git clone https://github.com/Data-Xcelerator/blockchain-etl
+make all
+```
+
+This will take care of
+
+* Installing geth
+* Starting the Ethereum node
+* Install remaining dependencies
+* Setup cron Job that runs hourly
+* Save the data in the `/data` directory
