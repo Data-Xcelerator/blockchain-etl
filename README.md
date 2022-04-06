@@ -53,7 +53,7 @@ ssh into the VM, clone the repo and run `make all` command. Eg
 
 ```
 ssh -i "very_secret.pem" ubuntu@ec2-01-23-456-789.compute-1.amazonaws.com
-git clone https://github.com/Data-Xcelerator/blockchain-etl
+git clone https://github.com/Data-Xcelerator/blockchain-etl && cd blockchain-etl
 make all
 ```
 
@@ -64,3 +64,17 @@ This will take care of
 * Install remaining dependencies
 * Setup cron Job that runs hourly
 * Save the data in the `/data` directory
+
+## Debugging
+
+blockchain logs saved in `nohup.out`
+
+```
+tail -f nohup.out
+```
+
+Script logs are saved in `/var/log/syslog`
+
+```
+tail -f /var/log/syslog
+```
